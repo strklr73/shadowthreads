@@ -1,0 +1,16 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"><link rel="stylesheet" href="../colors_and_type.css"><style>
+body { padding: 24px; background: var(--bg-primary); }
+.toast { display: inline-flex; align-items: center; gap: 10px; background: var(--bg-redacted); color: var(--fg-on-dark); padding: 10px 18px; border-radius: 6px; font-family: var(--font-heading); font-size: 11px; letter-spacing: 0.2em; border: 1px solid var(--accent); box-shadow: 0 12px 40px rgba(0,0,0,0.25); }
+.toast .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 10px var(--accent); }
+.lock { display: inline-flex; flex-direction: column; align-items: center; gap: 10px; background: rgba(17,17,24,0.95); padding: 18px 24px; border-radius: 10px; margin-left: 20px; }
+.lock .bar { background: var(--accent); color: #fff; font-family: var(--font-heading); font-weight: 700; font-size: 12px; letter-spacing: 0.3em; padding: 5px 18px; }
+.lock p { color: var(--fg-on-dark); font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.08em; text-align: center; }
+.hdr { font-family: var(--font-heading); font-size: 11px; letter-spacing: 0.22em; color: var(--fg-muted); text-transform: uppercase; padding-bottom: 14px; display: flex; align-items: center; gap: 10px; }
+.hdr::before { content: ''; width: 22px; height: 1px; background: var(--accent); }
+</style></head><body>
+<div class="hdr">TOASTS + OVERLAYS</div>
+<div style="display:flex; align-items:flex-start">
+<div class="toast"><span class="dot"></span>+1 UFO SCHEMATIC TEE · M · BONE</div>
+<div class="lock"><div class="bar">RESTRICTED</div><p>CLEARANCE LEVEL 5 REQUIRED</p></div>
+</div>
+</body></html>

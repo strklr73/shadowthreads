@@ -1,0 +1,16 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"><link rel="stylesheet" href="../colors_and_type.css"><style>
+body { padding: 28px 24px; background: var(--bg-primary); display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
+.btn { font-family: var(--font-heading); font-weight: 700; font-size: 12px; letter-spacing: 0.22em; color: var(--fg-primary); background: var(--bg-primary); border: 1px solid rgba(138,138,154,0.3); border-radius: 8px; padding: 12px 22px; cursor: pointer; box-shadow: var(--neu-raised); transition: all .3s; }
+.btn:hover { box-shadow: var(--glow-accent), var(--neu-raised); border-color: var(--accent); color: var(--accent); }
+.btn.pressed { box-shadow: var(--neu-inset); transform: scale(0.98); }
+.btn-sm { padding: 7px 14px; font-size: 10px; border-radius: 6px; }
+.hdr { font-family: var(--font-heading); font-size: 11px; letter-spacing: 0.22em; color: var(--fg-muted); text-transform: uppercase; width: 100%; padding-bottom: 6px; display: flex; align-items: center; gap: 10px; }
+.hdr::before { content: ''; width: 22px; height: 1px; background: var(--accent); }
+</style></head><body>
+<div class="hdr">BUTTONS — REST / HOVER / PRESS</div>
+<button class="btn">FILE REQUISITION</button>
+<button class="btn" style="box-shadow: var(--glow-accent), var(--neu-raised); border-color: var(--accent); color: var(--accent);">FILE REQUISITION</button>
+<button class="btn pressed">FILE REQUISITION</button>
+<button class="btn btn-sm">ACCESS TERMINAL</button>
+<button class="btn btn-sm" style="box-shadow: var(--neu-inset); color: var(--accent);">DISMISS</button>
+</body></html>

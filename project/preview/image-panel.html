@@ -1,0 +1,31 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"><link rel="stylesheet" href="../colors_and_type.css"><style>
+body { padding: 24px; background: var(--bg-primary); }
+.panel { position: relative; width: 100%; max-width: 340px; aspect-ratio: 1; border-radius: 14px; background: var(--bg-secondary); box-shadow: var(--neu-inset); overflow: hidden; }
+.cm { position: absolute; width: 16px; height: 16px; border: 1px solid var(--accent); opacity: 0.7; }
+.cm.tl { top: 8px; left: 8px; border-right: none; border-bottom: none; }
+.cm.tr { top: 8px; right: 8px; border-left: none; border-bottom: none; }
+.cm.bl { bottom: 8px; left: 8px; border-right: none; border-top: none; }
+.cm.br { bottom: 8px; right: 8px; border-left: none; border-top: none; }
+.top { position: absolute; top: 10px; left: 50%; transform: translateX(-50%); display: flex; gap: 10px; font-family: var(--font-mono); font-size: 8px; letter-spacing: 0.1em; color: var(--blueprint-line); }
+.top .dot { color: var(--accent); animation: st-flicker 3s infinite; }
+.btm { position: absolute; bottom: 10px; left: 0; right: 0; padding: 0 20px; display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 8px; letter-spacing: 0.1em; color: var(--blueprint-line); }
+.canvas { position: absolute; inset: 18px; border-radius: 10px; background: #f1f1f4; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+.canvas img { width: 100%; height: 100%; object-fit: contain; }
+.scan { position: absolute; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--accent-soft) 30%, var(--accent) 50%, var(--accent-soft) 70%, transparent); opacity: 0.5; top: 0; animation: st-scan-sweep 4.5s linear infinite; pointer-events: none; }
+.ch-v { position: absolute; top: 0; bottom: 0; left: 60%; width: 1px; background: var(--accent); opacity: 0.45; }
+.ch-h { position: absolute; left: 0; right: 0; top: 50%; height: 1px; background: var(--accent); opacity: 0.45; }
+.ch-coord { position: absolute; left: 60%; top: 50%; background: var(--bg-redacted); color: var(--accent); font-family: var(--font-mono); font-size: 8px; padding: 2px 6px; border-radius: 2px; transform: translate(10px, 10px); letter-spacing: 0.08em; white-space: nowrap; }
+.hdr { font-family: var(--font-heading); font-size: 11px; letter-spacing: 0.22em; color: var(--fg-muted); text-transform: uppercase; padding-bottom: 14px; display: flex; align-items: center; gap: 10px; }
+.hdr::before { content: ''; width: 22px; height: 1px; background: var(--accent); }
+</style></head><body>
+<div class="hdr">IMAGE PANEL — BLUEPRINT HUD + CROSSHAIR</div>
+<div class="panel">
+  <div class="cm tl"></div><div class="cm tr"></div><div class="cm bl"></div><div class="cm br"></div>
+  <div class="top"><span><span class="dot">●</span> RECORDING</span><span>CAM_FRONT</span><span>F/2.8 · 1/250</span></div>
+  <div class="canvas"><img src="../assets/products/tshirt-1.png"></div>
+  <div class="scan"></div>
+  <div class="ch-v"></div><div class="ch-h"></div>
+  <div class="ch-coord">X 60.0 · Y 50.0</div>
+  <div class="btm"><span>SUBJECT: AV-19B</span><span>SCALE: 1:1</span><span>REV.1</span></div>
+</div>
+</body></html>

@@ -1,0 +1,18 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"><link rel="stylesheet" href="../colors_and_type.css"><style>
+body { padding: 28px 24px; background: var(--bg-primary); }
+.row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; align-items: end; text-align: center; }
+.r { background: var(--bg-primary); box-shadow: var(--neu-raised-sm); margin: 0 auto 8px; }
+.lbl { font-family: var(--font-heading); font-size: 10px; letter-spacing: 0.22em; color: var(--fg-primary); text-transform: uppercase; }
+.val { font-family: var(--font-mono); font-size: 9px; color: var(--fg-muted); margin-top: 2px; letter-spacing: 0.06em; }
+.hdr { font-family: var(--font-heading); font-size: 11px; letter-spacing: 0.22em; color: var(--fg-muted); text-transform: uppercase; padding-bottom: 14px; display: flex; align-items: center; gap: 10px; }
+.hdr::before { content: ''; width: 22px; height: 1px; background: var(--accent); }
+</style></head><body>
+<div class="hdr">RADII</div>
+<div class="row">
+  <div><div class="r" style="width:60px;height:60px;border-radius:3px"></div><div class="lbl">XS</div><div class="val">3px · bars, chips</div></div>
+  <div><div class="r" style="width:60px;height:60px;border-radius:6px"></div><div class="lbl">SM</div><div class="val">6px · sizes</div></div>
+  <div><div class="r" style="width:60px;height:60px;border-radius:8px"></div><div class="lbl">MD</div><div class="val">8px · buttons</div></div>
+  <div><div class="r" style="width:60px;height:60px;border-radius:12px"></div><div class="lbl">LG</div><div class="val">12px · cards</div></div>
+  <div><div class="r" style="width:60px;height:60px;border-radius:14px"></div><div class="lbl">XL</div><div class="val">14px · panels</div></div>
+</div>
+</body></html>

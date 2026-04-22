@@ -1,0 +1,20 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"><link rel="stylesheet" href="../colors_and_type.css"><style>
+body { padding: 28px 24px; background: var(--bg-primary); }
+.row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.demo { text-align: center; }
+.demo .box { width: 90px; height: 90px; margin: 0 auto 10px; border-radius: var(--r-md); background: var(--bg-primary); }
+.raised { box-shadow: var(--neu-raised); }
+.inset { box-shadow: var(--neu-inset); }
+.flat { box-shadow: var(--neu-flat); }
+.demo .lbl { font-family: var(--font-heading); font-size: 10px; letter-spacing: 0.22em; color: var(--fg-primary); text-transform: uppercase; }
+.demo .val { font-family: var(--font-mono); font-size: 9px; color: var(--fg-muted); margin-top: 2px; letter-spacing: 0.06em; }
+.hdr { font-family: var(--font-heading); font-size: 11px; letter-spacing: 0.22em; color: var(--fg-muted); text-transform: uppercase; padding-bottom: 14px; display: flex; align-items: center; gap: 10px; }
+.hdr::before { content: ''; width: 22px; height: 1px; background: var(--accent); }
+</style></head><body>
+<div class="hdr">NEUMORPHIC ELEVATION</div>
+<div class="row">
+  <div class="demo"><div class="box raised"></div><div class="lbl">RAISED</div><div class="val">6 6 14 · +white / -gray</div></div>
+  <div class="demo"><div class="box inset"></div><div class="lbl">INSET</div><div class="val">inset 3 3 8 · selected</div></div>
+  <div class="demo"><div class="box flat"></div><div class="lbl">FLAT</div><div class="val">2 2 6 · thumbs, chips</div></div>
+</div>
+</body></html>

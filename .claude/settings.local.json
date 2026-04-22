@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:api.anthropic.com)",
+      "Bash(npm install *)",
+      "Bash(npx vite *)",
+      "mcp__Claude_Preview__preview_start",
+      "Bash(gh auth *)"
+    ]
+  }
+}

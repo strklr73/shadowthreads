@@ -1,0 +1,18 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"><link rel="stylesheet" href="../colors_and_type.css"><style>
+body { padding: 24px; background: var(--bg-primary); }
+.row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+.sw { border-radius: var(--r-md); box-shadow: var(--neu-raised-sm); overflow: hidden; }
+.sw .chip { height: 70px; }
+.sw .meta { padding: 8px 10px; background: var(--bg-primary); font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.06em; color: var(--fg-secondary); display: flex; justify-content: space-between; }
+.sw .meta .name { font-family: var(--font-heading); font-weight: 600; letter-spacing: 0.15em; color: var(--fg-primary); font-size: 10px; }
+.hdr { font-family: var(--font-heading); font-size: 11px; letter-spacing: 0.22em; color: var(--fg-muted); text-transform: uppercase; padding-bottom: 10px; display: flex; align-items: center; gap: 10px; }
+.hdr::before { content: ''; width: 22px; height: 1px; background: var(--accent); }
+</style></head><body>
+<div class="hdr">SURFACES</div>
+<div class="row">
+  <div class="sw"><div class="chip" style="background:#e8e8ec"></div><div class="meta"><span class="name">BG PRIMARY</span><span>#e8e8ec</span></div></div>
+  <div class="sw"><div class="chip" style="background:#dfe0e6"></div><div class="meta"><span class="name">BG SECONDARY</span><span>#dfe0e6</span></div></div>
+  <div class="sw"><div class="chip" style="background:#d8d8df"></div><div class="meta"><span class="name">BG CARD</span><span>#d8d8df</span></div></div>
+  <div class="sw"><div class="chip" style="background:#111118"></div><div class="meta"><span class="name" style="color:#f0f0f0;background:#111118;padding:8px 10px;margin:-8px -10px">REDACTED</span><span style="color:#f0f0f0;background:#111118;padding:8px 10px;margin:-8px -10px">#111118</span></div></div>
+</div>
+</body></html>

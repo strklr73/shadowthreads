@@ -1,0 +1,24 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"><link rel="stylesheet" href="../colors_and_type.css"><style>
+body { padding: 24px; background: var(--bg-primary); }
+.header { background: var(--bg-primary); box-shadow: var(--neu-raised-sm); padding: 12px 22px; display: flex; align-items: center; gap: 32px; border-radius: 8px; border-bottom: 1px solid rgba(138,138,154,0.15); }
+.logo { font-family: var(--font-heading); font-weight: 700; font-size: 16px; letter-spacing: 0.12em; color: var(--fg-primary); }
+nav { display: flex; gap: 22px; margin-left: auto; align-items: center; }
+.nav-link { font-family: var(--font-heading); font-weight: 600; font-size: 11px; letter-spacing: 0.15em; color: var(--fg-secondary); text-decoration: none; position: relative; }
+.nav-link.active { color: var(--fg-primary); }
+.nav-link.active::after { content: ''; position: absolute; bottom: -3px; left: 0; right: 0; height: 1.5px; background: var(--accent); }
+.nav-icon { background: none; border: none; color: var(--fg-secondary); cursor: pointer; }
+.hdr { font-family: var(--font-heading); font-size: 11px; letter-spacing: 0.22em; color: var(--fg-muted); text-transform: uppercase; padding-bottom: 14px; display: flex; align-items: center; gap: 10px; }
+.hdr::before { content: ''; width: 22px; height: 1px; background: var(--accent); }
+</style></head><body>
+<div class="hdr">HEADER</div>
+<div class="header">
+  <span class="logo">SHADOW THREADS</span>
+  <nav>
+    <a class="nav-link active" href="#">ARCHIVE</a>
+    <a class="nav-link" href="#">THE LAB</a>
+    <a class="nav-link" href="#">TERMINAL</a>
+    <button class="nav-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></button>
+    <button class="nav-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg></button>
+  </nav>
+</div>
+</body></html>

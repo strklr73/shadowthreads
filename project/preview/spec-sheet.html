@@ -1,0 +1,24 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"><link rel="stylesheet" href="../colors_and_type.css"><style>
+body { padding: 24px; background: var(--bg-primary); }
+.spec { background: var(--bg-secondary); box-shadow: var(--neu-inset); border-radius: 12px; padding: 16px; position: relative; overflow: hidden; }
+.spec::before { content: ''; position: absolute; inset: 0; background-image: linear-gradient(to right, rgba(138,138,154,0.08) 1px, transparent 1px), linear-gradient(to bottom, rgba(138,138,154,0.08) 1px, transparent 1px); background-size: 14px 14px; pointer-events: none; }
+.spec-head { display: flex; justify-content: space-between; font-family: var(--font-heading); font-size: 10px; letter-spacing: 0.22em; color: var(--fg-muted); margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px dashed var(--blueprint-faint); position: relative; }
+.spec-head .id { color: var(--accent); }
+.body { position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: 10px 18px; }
+.row { display: flex; flex-direction: column; gap: 2px; padding-bottom: 6px; border-bottom: 1px dashed var(--blueprint-faint); }
+.k { font-family: var(--font-heading); font-size: 8px; letter-spacing: 0.2em; color: var(--fg-muted); text-transform: uppercase; }
+.v { font-family: var(--font-mono); font-size: 12px; color: var(--fg-primary); }
+.hdr { font-family: var(--font-heading); font-size: 11px; letter-spacing: 0.22em; color: var(--fg-muted); text-transform: uppercase; padding-bottom: 14px; display: flex; align-items: center; gap: 10px; }
+.hdr::before { content: ''; width: 22px; height: 1px; background: var(--accent); }
+</style></head><body>
+<div class="hdr">SPEC SHEET — RECESSED BLUEPRINT GRID</div>
+<div class="spec">
+  <div class="spec-head"><span>SCHEMATIC</span><span class="id">AV-19B / REV.1</span></div>
+  <div class="body">
+    <div class="row"><span class="k">SUBJECT</span><span class="v">Disc-form vessel</span></div>
+    <div class="row"><span class="k">DIAMETER</span><span class="v">11.2 m ± 0.3</span></div>
+    <div class="row"><span class="k">HULL</span><span class="v">Unidentified alloy</span></div>
+    <div class="row"><span class="k">CREW</span><span class="v">≤ 3, humanoid</span></div>
+  </div>
+</div>
+</body></html>

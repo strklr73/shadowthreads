@@ -1,0 +1,26 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"><link rel="stylesheet" href="../colors_and_type.css"><style>
+body { padding: 24px; background: var(--bg-primary); }
+.card { background: var(--bg-primary); border-radius: 14px; box-shadow: var(--neu-raised); padding: 0; overflow: hidden; width: 220px; position: relative; }
+.card .top { padding: 8px 12px 4px; display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 8px; color: var(--fg-muted); letter-spacing: 0.08em; }
+.card .top .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); animation: st-pulse-dot 2s infinite; }
+.card .img { aspect-ratio: 1; margin: 0 12px; background: var(--bg-secondary); box-shadow: var(--neu-inset); border-radius: 8px; position: relative; overflow: hidden; }
+.card .img img { width: 100%; height: 100%; object-fit: cover; }
+.card .redact { position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%); width: 80%; background: var(--bg-redacted); color: var(--fg-on-dark); font-family: var(--font-heading); font-weight: 700; font-size: 11px; letter-spacing: 0.22em; text-align: center; padding: 6px 14px; border-radius: 3px; }
+.card .name { padding: 10px 14px 4px; font-family: var(--font-heading); font-weight: 700; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; }
+.card .btm { padding: 0 14px 12px; display: flex; justify-content: space-between; align-items: center; }
+.card .price { font-family: var(--font-heading); font-weight: 600; font-size: 13px; }
+.card .temp { font-family: var(--font-mono); font-size: 9px; color: var(--accent); }
+.hdr { font-family: var(--font-heading); font-size: 11px; letter-spacing: 0.22em; color: var(--fg-muted); text-transform: uppercase; padding-bottom: 14px; display: flex; align-items: center; gap: 10px; }
+.hdr::before { content: ''; width: 22px; height: 1px; background: var(--accent); }
+</style></head><body>
+<div class="hdr">PRODUCT CARD — REDACTED STATE</div>
+<div class="card">
+  <div class="top"><span>REF:7F3A9 · OMEGA</span><span class="dot"></span></div>
+  <div class="img">
+    <img src="../assets/products/tshirt-1.png" alt="">
+    <div class="redact">REDACTED</div>
+  </div>
+  <div class="name">UFO SCHEMATIC TEE</div>
+  <div class="btm"><span class="price">$45.00</span><span class="temp">45°</span></div>
+</div>
+</body></html>

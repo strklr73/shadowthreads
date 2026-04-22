@@ -1,0 +1,19 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"><link rel="stylesheet" href="../colors_and_type.css"><style>
+body { padding: 24px; background: var(--bg-primary); }
+.row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+.sw { border-radius: var(--r-md); box-shadow: var(--neu-raised-sm); overflow: hidden; }
+.sw .chip { height: 70px; position: relative; }
+.sw .meta { padding: 8px 10px; background: var(--bg-primary); font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.06em; color: var(--fg-secondary); display: flex; justify-content: space-between; }
+.sw .meta .name { font-family: var(--font-heading); font-weight: 600; letter-spacing: 0.15em; color: var(--fg-primary); font-size: 10px; }
+.hdr { font-family: var(--font-heading); font-size: 11px; letter-spacing: 0.22em; color: var(--fg-muted); text-transform: uppercase; padding-bottom: 10px; display: flex; align-items: center; gap: 10px; }
+.hdr::before { content: ''; width: 22px; height: 1px; background: var(--accent); }
+.dot { width: 14px; height: 14px; border-radius: 50%; background: var(--accent); position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); box-shadow: 0 0 0 0 var(--accent-glow); animation: st-pulse-dot 2s infinite; }
+</style></head><body>
+<div class="hdr">ACCENT — "DECLASSIFIED ORANGE"</div>
+<div class="row">
+  <div class="sw"><div class="chip" style="background:#e85d26"></div><div class="meta"><span class="name">ACCENT</span><span>#e85d26</span></div></div>
+  <div class="sw"><div class="chip" style="background:#c04a1b"></div><div class="meta"><span class="name">ACCENT DEEP</span><span>#c04a1b</span></div></div>
+  <div class="sw"><div class="chip" style="background:rgba(232,93,38,0.12)"></div><div class="meta"><span class="name">ACCENT SOFT</span><span>12%</span></div></div>
+  <div class="sw"><div class="chip" style="background:var(--bg-primary)"><span class="dot"></span></div><div class="meta"><span class="name">GLOW / PULSE</span><span>rgba 45%</span></div></div>
+</div>
+</body></html>

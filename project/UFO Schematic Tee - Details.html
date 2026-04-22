@@ -1,0 +1,1759 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>UFO Schematic Tee — Shadow Threads</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+<style>
+:root {
+  --bg-primary: #e8e8ec;
+  --bg-secondary: #dfe0e6;
+  --bg-card: #d8d8df;
+  --text-primary: #1a1a2e;
+  --text-secondary: #6b6b7b;
+  --text-muted: #9a9aaa;
+  --accent: #e85d26;
+  --accent-glow: rgba(232, 93, 38, 0.45);
+  --accent-soft: rgba(232, 93, 38, 0.12);
+  --redacted-bg: #111118;
+  --redacted-text: #f0f0f0;
+  --blueprint-line: #8a8a9a;
+  --blueprint-faint: rgba(138,138,154,0.25);
+  --glow-orange: 0 0 18px rgba(232,93,38,0.35), 0 0 40px rgba(232,93,38,0.12);
+  --neu-raised: 6px 6px 14px #c2c2c8, -6px -6px 14px #ffffff;
+  --neu-raised-sm: 3px 3px 8px #c2c2c8, -3px -3px 8px #ffffff;
+  --neu-inset: inset 3px 3px 8px #c2c2c8, inset -3px -3px 8px #ffffff;
+  --neu-inset-sm: inset 2px 2px 5px #c2c2c8, inset -2px -2px 5px #ffffff;
+  --neu-flat: 2px 2px 6px #c2c2c8, -2px -2px 6px #ffffff;
+  --font-heading: 'Rajdhani', sans-serif;
+  --font-mono: 'Share Tech Mono', monospace;
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; font-size: 16px; }
+
+body {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  line-height: 1.5;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+
+/* ═════════ HEADER ═════════ */
+#site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--bg-primary);
+  box-shadow: var(--neu-raised-sm);
+  border-bottom: 1px solid rgba(138,138,154,0.15);
+}
+.header-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  padding: 0.9rem 2rem;
+  gap: 2.5rem;
+}
+.logo {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 1.35rem;
+  letter-spacing: 0.12em;
+  color: var(--text-primary);
+  text-decoration: none;
+  white-space: nowrap;
+}
+#main-nav {
+  display: flex;
+  align-items: center;
+  gap: 1.8rem;
+  margin-left: auto;
+}
+.nav-link {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+  color: var(--text-secondary);
+  text-decoration: none;
+  position: relative;
+  transition: color 0.25s;
+}
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  width: 0;
+  height: 1.5px;
+  background: var(--accent);
+  transition: width 0.3s ease;
+}
+.nav-link:hover { color: var(--text-primary); }
+.nav-link:hover::after { width: 100%; }
+.nav-link.active { color: var(--text-primary); }
+.nav-link.active::after { width: 100%; }
+
+.nav-icon {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-secondary);
+  transition: color 0.25s;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+.nav-icon:hover { color: var(--accent); }
+.nav-cart-count {
+  position: absolute;
+  top: -2px;
+  right: -4px;
+  background: var(--accent);
+  color: #fff;
+  font-family: var(--font-heading);
+  font-size: 0.55rem;
+  font-weight: 700;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+/* ═════════ BREADCRUMB ═════════ */
+.breadcrumb-bar {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 1.2rem 2rem 0.6rem;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  font-family: var(--font-heading);
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+.breadcrumb-bar a { color: var(--text-muted); text-decoration: none; transition: color .2s; }
+.breadcrumb-bar a:hover { color: var(--accent); }
+.breadcrumb-sep { opacity: 0.5; }
+.breadcrumb-bar .current { color: var(--text-primary); }
+.breadcrumb-meta {
+  margin-left: auto;
+  display: flex;
+  gap: 1.2rem;
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  color: var(--blueprint-line);
+}
+.breadcrumb-meta .accent-dot { color: var(--accent); }
+
+/* ═════════ MAIN ═════════ */
+main {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 1rem 2rem 4rem;
+}
+
+/* ═════════ PRODUCT LAYOUT ═════════ */
+.product-wrap {
+  display: grid;
+  grid-template-columns: 80px 1fr 460px;
+  gap: 2rem;
+  margin-top: 1.5rem;
+  position: relative;
+}
+
+/* ═════════ THUMB RAIL ═════════ */
+.thumb-rail {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.thumb-rail-label {
+  font-family: var(--font-heading);
+  font-size: 0.55rem;
+  letter-spacing: 0.2em;
+  color: var(--text-muted);
+  text-align: center;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--blueprint-faint);
+  margin-bottom: 4px;
+}
+.thumb {
+  width: 80px;
+  height: 80px;
+  border-radius: 8px;
+  background: var(--bg-secondary);
+  box-shadow: var(--neu-flat);
+  cursor: pointer;
+  overflow: hidden;
+  position: relative;
+  transition: box-shadow .3s, transform .25s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.thumb img { width: 100%; height: 100%; object-fit: cover; }
+.thumb.active {
+  box-shadow: var(--neu-inset);
+}
+.thumb.active::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 1.5px solid var(--accent);
+  border-radius: 8px;
+  pointer-events: none;
+}
+.thumb:hover { transform: translateY(-2px); }
+.thumb.active:hover { transform: none; }
+
+.thumb-label {
+  font-family: var(--font-heading);
+  font-size: 0.5rem;
+  letter-spacing: 0.18em;
+  color: var(--text-muted);
+  text-align: center;
+  margin-top: 2px;
+}
+.thumb-view-tag {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  background: rgba(26,26,46,0.82);
+  color: var(--bg-primary);
+  font-family: var(--font-heading);
+  font-size: 0.48rem;
+  letter-spacing: 0.15em;
+  padding: 1px 5px;
+  border-radius: 2px;
+}
+
+/* ═════════ MAIN IMAGE PANEL ═════════ */
+.image-panel {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  border-radius: 14px;
+  background: var(--bg-secondary);
+  box-shadow: var(--neu-inset);
+  overflow: hidden;
+  cursor: crosshair;
+}
+.image-canvas {
+  position: absolute;
+  inset: 20px;
+  border-radius: 10px;
+  background: #f1f1f4;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.image-canvas img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: transform 0.35s cubic-bezier(0.4,0,0.2,1), opacity 0.25s;
+}
+.image-panel.zoomed .image-canvas img {
+  transform: scale(1.8);
+}
+
+/* Blueprint crosshair overlay */
+.crosshair {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity .25s;
+}
+.image-panel:hover .crosshair { opacity: 1; }
+.crosshair .ch-v {
+  position: absolute;
+  top: 0; bottom: 0;
+  width: 1px;
+  background: var(--accent);
+  opacity: 0.45;
+}
+.crosshair .ch-h {
+  position: absolute;
+  left: 0; right: 0;
+  height: 1px;
+  background: var(--accent);
+  opacity: 0.45;
+}
+.crosshair .ch-coord {
+  position: absolute;
+  background: var(--redacted-bg);
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  padding: 2px 6px;
+  border-radius: 2px;
+  transform: translate(12px, 12px);
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+}
+
+/* Image panel corner marks */
+.corner-mark {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border: 1px solid var(--accent);
+  opacity: 0.7;
+}
+.corner-mark.tl { top: 8px; left: 8px; border-right: none; border-bottom: none; }
+.corner-mark.tr { top: 8px; right: 8px; border-left: none; border-bottom: none; }
+.corner-mark.bl { bottom: 8px; left: 8px; border-right: none; border-top: none; }
+.corner-mark.br { bottom: 8px; right: 8px; border-left: none; border-top: none; }
+
+/* Image panel top info */
+.image-top-info {
+  position: absolute;
+  top: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 14px;
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.1em;
+  color: var(--blueprint-line);
+  z-index: 3;
+}
+.image-top-info .accent-dot { color: var(--accent); animation: pulse-dot 2s infinite; }
+
+.image-bottom-info {
+  position: absolute;
+  bottom: 14px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 24px;
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.1em;
+  color: var(--blueprint-line);
+  z-index: 3;
+}
+
+/* Image zoom hint */
+.zoom-hint {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  background: var(--bg-primary);
+  box-shadow: var(--neu-raised-sm);
+  padding: 6px 10px;
+  border-radius: 4px;
+  font-family: var(--font-heading);
+  font-size: 0.55rem;
+  letter-spacing: 0.15em;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  z-index: 4;
+}
+.zoom-hint svg { flex-shrink: 0; }
+
+/* scan line on image */
+.image-scan {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent-soft) 30%, var(--accent) 50%, var(--accent-soft) 70%, transparent);
+  opacity: 0.4;
+  animation: scanSweep 5s linear infinite;
+  pointer-events: none;
+  z-index: 2;
+}
+@keyframes scanSweep { 0% { top: 0%; } 100% { top: 100%; } }
+
+/* Redaction overlay (clearance prompt) */
+.clearance-lock {
+  position: absolute;
+  inset: 20px;
+  border-radius: 10px;
+  background: rgba(17,17,24,0.92);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  z-index: 10;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .35s ease;
+}
+.clearance-lock.on {
+  opacity: 1;
+  pointer-events: auto;
+}
+.clearance-lock .lock-bar {
+  background: var(--accent);
+  color: #fff;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 0.8rem;
+  letter-spacing: 0.3em;
+  padding: 6px 22px;
+}
+.clearance-lock p {
+  color: var(--bg-primary);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-align: center;
+  max-width: 280px;
+  line-height: 1.6;
+}
+.lock-toggle {
+  font-family: var(--font-heading);
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  color: var(--bg-primary);
+  background: transparent;
+  border: 1px solid var(--bg-primary);
+  padding: 7px 16px;
+  cursor: pointer;
+  border-radius: 3px;
+  transition: all .25s;
+}
+.lock-toggle:hover { background: var(--bg-primary); color: var(--redacted-bg); }
+
+/* ═════════ INFO PANEL ═════════ */
+.info-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+}
+
+.dossier-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-heading);
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  color: var(--text-muted);
+  padding-bottom: 10px;
+  border-bottom: 1px dashed var(--blueprint-faint);
+}
+.dossier-tag .accent-dot { color: var(--accent); }
+.dossier-tag .tag-ref {
+  margin-left: auto;
+  color: var(--blueprint-line);
+}
+
+.product-title {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 2.4rem;
+  line-height: 1.05;
+  letter-spacing: 0.04em;
+  color: var(--text-primary);
+  text-transform: uppercase;
+}
+
+.product-subtitle {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  letter-spacing: 0.06em;
+  line-height: 1.7;
+  max-width: 95%;
+}
+
+.price-block {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  padding: 14px 0 6px;
+  border-top: 1px solid var(--blueprint-faint);
+  border-bottom: 1px solid var(--blueprint-faint);
+}
+.price-block .price {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 2rem;
+  color: var(--text-primary);
+}
+.price-block .price-sub {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  letter-spacing: 0.1em;
+}
+.price-block .stock {
+  margin-left: auto;
+  font-family: var(--font-heading);
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.price-block .stock .dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 0 var(--accent-glow);
+  animation: pulse-dot 2s infinite;
+}
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 var(--accent-glow); }
+  50%      { opacity: 0.55; box-shadow: 0 0 0 5px transparent; }
+}
+
+/* Selector groups */
+.selector-group { display: flex; flex-direction: column; gap: 10px; }
+.selector-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  font-family: var(--font-heading);
+  font-size: 0.68rem;
+  letter-spacing: 0.2em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+.selector-head .selected-val {
+  color: var(--text-primary);
+  letter-spacing: 0.1em;
+  font-weight: 600;
+}
+.selector-head a {
+  color: var(--blueprint-line);
+  text-decoration: none;
+  font-size: 0.58rem;
+  transition: color .2s;
+}
+.selector-head a:hover { color: var(--accent); }
+
+/* Colorway chips */
+.color-row { display: flex; gap: 10px; }
+.color-chip {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: var(--bg-primary);
+  box-shadow: var(--neu-raised-sm);
+  cursor: pointer;
+  position: relative;
+  transition: box-shadow .25s, transform .2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+}
+.color-chip:hover { transform: translateY(-2px); }
+.color-chip .swatch {
+  width: 100%;
+  height: 100%;
+  border-radius: 6px;
+  box-shadow: var(--neu-inset-sm);
+}
+.color-chip.active {
+  box-shadow: var(--neu-inset);
+}
+.color-chip.active::after {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border: 1px solid var(--accent);
+  border-radius: 12px;
+  pointer-events: none;
+}
+.color-chip.sold-out { opacity: 0.35; cursor: not-allowed; }
+.color-chip.sold-out::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 10%;
+  right: 10%;
+  height: 1px;
+  background: var(--text-primary);
+  transform: rotate(-18deg);
+  z-index: 2;
+}
+
+/* Size grid */
+.size-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 8px;
+}
+.size-cell {
+  position: relative;
+  aspect-ratio: 1.1 / 1;
+  background: var(--bg-primary);
+  box-shadow: var(--neu-raised-sm);
+  border: none;
+  border-radius: 6px;
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: box-shadow .25s, color .25s;
+}
+.size-cell:hover { color: var(--accent); }
+.size-cell.active {
+  box-shadow: var(--neu-inset);
+  color: var(--accent);
+}
+.size-cell.active::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 1px solid var(--accent);
+  border-radius: 6px;
+  pointer-events: none;
+}
+.size-cell.oos {
+  color: var(--text-muted);
+  cursor: not-allowed;
+}
+.size-cell.oos::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 15%;
+  right: 15%;
+  height: 1px;
+  background: var(--text-muted);
+  transform: rotate(-14deg);
+}
+
+/* Qty + add to cart row */
+.cta-row {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 12px;
+  align-items: stretch;
+}
+.qty-box {
+  display: flex;
+  align-items: center;
+  background: var(--bg-primary);
+  box-shadow: var(--neu-inset-sm);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.qty-btn {
+  background: none;
+  border: none;
+  width: 38px;
+  height: 48px;
+  cursor: pointer;
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  transition: color .2s;
+}
+.qty-btn:hover { color: var(--accent); }
+.qty-val {
+  min-width: 32px;
+  text-align: center;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--text-primary);
+}
+
+.add-cart-btn {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 0.9rem;
+  letter-spacing: 0.22em;
+  color: var(--text-primary);
+  background: var(--bg-primary);
+  border: 1px solid rgba(138,138,154,0.3);
+  border-radius: 8px;
+  padding: 0 1rem;
+  cursor: pointer;
+  box-shadow: var(--neu-raised);
+  position: relative;
+  overflow: hidden;
+  transition: box-shadow .35s, color .35s, border-color .35s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+.add-cart-btn:hover {
+  box-shadow: var(--glow-orange), var(--neu-raised);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.add-cart-btn:active {
+  box-shadow: var(--neu-inset);
+  transform: scale(0.98);
+}
+.add-cart-btn.added {
+  color: var(--accent);
+  border-color: var(--accent);
+  box-shadow: var(--glow-orange), var(--neu-raised);
+}
+.add-cart-btn .ship-sub {
+  display: block;
+  font-weight: 500;
+  font-size: 0.52rem;
+  letter-spacing: 0.2em;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+.add-cart-btn:hover .ship-sub { color: var(--accent); opacity: 0.7; }
+
+/* Accessory row */
+.accessory-row {
+  display: flex;
+  gap: 10px;
+}
+.accessory-btn {
+  flex: 1;
+  background: var(--bg-primary);
+  box-shadow: var(--neu-raised-sm);
+  border: none;
+  border-radius: 6px;
+  padding: 9px 12px;
+  font-family: var(--font-heading);
+  font-size: 0.62rem;
+  letter-spacing: 0.2em;
+  color: var(--text-secondary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: color .25s, box-shadow .25s;
+}
+.accessory-btn:hover { color: var(--accent); }
+.accessory-btn.active { box-shadow: var(--neu-inset); color: var(--accent); }
+
+/* ═════════ DOSSIER TABS ═════════ */
+.dossier {
+  margin-top: 4rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2.5rem;
+  border-top: 1px solid var(--blueprint-faint);
+  padding-top: 2rem;
+}
+
+.dossier-left {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+.dossier-heading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 0.7rem;
+  letter-spacing: 0.25em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.dossier-heading::before {
+  content: '';
+  display: block;
+  width: 22px;
+  height: 1px;
+  background: var(--accent);
+}
+
+.tabs-row {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid var(--blueprint-faint);
+}
+.tab {
+  background: none;
+  border: none;
+  padding: 10px 18px;
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  color: var(--text-muted);
+  cursor: pointer;
+  text-transform: uppercase;
+  position: relative;
+  transition: color .25s;
+}
+.tab:first-child { padding-left: 0; }
+.tab:hover { color: var(--text-primary); }
+.tab.active { color: var(--text-primary); }
+.tab.active::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  margin: 0 10px;
+  height: 2px;
+  background: var(--accent);
+}
+.tab:first-child.active::after { margin-left: 0; }
+
+.tab-body {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  line-height: 1.8;
+  color: var(--text-secondary);
+  padding: 6px 0;
+}
+.tab-body p + p { margin-top: 0.9rem; }
+.tab-body ul { list-style: none; padding: 0; margin-top: 0.4rem; }
+.tab-body ul li {
+  display: flex;
+  gap: 10px;
+  padding: 5px 0;
+  border-bottom: 1px dashed var(--blueprint-faint);
+  font-size: 0.78rem;
+}
+.tab-body ul li:last-child { border-bottom: none; }
+.tab-body ul li .k {
+  min-width: 140px;
+  color: var(--text-muted);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-size: 0.65rem;
+  padding-top: 2px;
+}
+.tab-body ul li .v {
+  color: var(--text-primary);
+  flex: 1;
+}
+.tab-body .ts {
+  font-size: 0.55rem;
+  color: var(--accent);
+  letter-spacing: 0.15em;
+  display: block;
+  margin-bottom: 6px;
+}
+
+/* Dossier right: blueprint spec sheet */
+.spec-sheet {
+  background: var(--bg-secondary);
+  box-shadow: var(--neu-inset);
+  border-radius: 12px;
+  padding: 1.4rem;
+  position: relative;
+  overflow: hidden;
+}
+.spec-sheet::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, rgba(138,138,154,0.08) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(138,138,154,0.08) 1px, transparent 1px);
+  background-size: 16px 16px;
+  pointer-events: none;
+}
+.spec-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-heading);
+  font-size: 0.68rem;
+  letter-spacing: 0.22em;
+  color: var(--text-muted);
+  margin-bottom: 14px;
+  position: relative;
+  padding-bottom: 10px;
+  border-bottom: 1px dashed var(--blueprint-faint);
+}
+.spec-header .id {
+  margin-left: auto;
+  color: var(--accent);
+}
+
+.spec-body {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px 22px;
+}
+.spec-row {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding-bottom: 8px;
+  border-bottom: 1px dashed var(--blueprint-faint);
+}
+.spec-row .k {
+  font-family: var(--font-heading);
+  font-size: 0.55rem;
+  letter-spacing: 0.2em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+.spec-row .v {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--text-primary);
+  letter-spacing: 0.03em;
+}
+.spec-row.wide { grid-column: span 2; }
+
+/* Measurement table */
+.measure-table {
+  width: 100%;
+  margin-top: 14px;
+  border-collapse: collapse;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  position: relative;
+}
+.measure-table th, .measure-table td {
+  padding: 7px 6px;
+  text-align: center;
+  border-bottom: 1px dashed var(--blueprint-faint);
+}
+.measure-table th {
+  font-family: var(--font-heading);
+  font-size: 0.6rem;
+  letter-spacing: 0.18em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  text-align: center;
+}
+.measure-table th:first-child, .measure-table td:first-child {
+  text-align: left;
+  color: var(--text-muted);
+}
+.measure-table td { color: var(--text-primary); }
+.measure-table tr.selected td {
+  background: rgba(232,93,38,0.08);
+  color: var(--accent);
+}
+
+/* ═════════ RELATED ═════════ */
+.related {
+  margin-top: 4rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--blueprint-faint);
+}
+.related-head {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.8rem;
+}
+.related-head .tag {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 0.75rem;
+  letter-spacing: 0.22em;
+  color: var(--text-muted);
+}
+.related-head .line { flex: 1; height: 1px; background: var(--blueprint-faint); }
+.related-head .meta {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  color: var(--blueprint-line);
+  letter-spacing: 0.1em;
+}
+.related-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.2rem;
+}
+.rel-card {
+  background: var(--bg-primary);
+  border-radius: 12px;
+  box-shadow: var(--neu-raised);
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform .3s, box-shadow .3s;
+  position: relative;
+}
+.rel-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 8px 8px 20px #b8b8be, -8px -8px 20px #ffffff;
+}
+.rel-top {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 12px 4px;
+  font-family: var(--font-mono);
+  font-size: 0.5rem;
+  color: var(--text-muted);
+  letter-spacing: 0.08em;
+}
+.rel-top .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+.rel-img {
+  aspect-ratio: 1 / 1;
+  background: var(--bg-secondary);
+  box-shadow: var(--neu-inset);
+  border-radius: 8px;
+  margin: 0 12px;
+  overflow: hidden;
+  position: relative;
+}
+.rel-img img { width: 100%; height: 100%; object-fit: cover; }
+.rel-info {
+  padding: 10px 14px 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.rel-info .name {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.rel-info .price {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 0.8rem;
+  color: var(--text-primary);
+}
+
+/* ═════════ FOOTER ═════════ */
+footer {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2.5rem 2rem 2rem;
+  border-top: 1px solid var(--blueprint-faint);
+  text-align: center;
+  position: relative;
+}
+footer .footer-text {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 0.65rem;
+  letter-spacing: 0.18em;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+footer .footer-sub {
+  font-size: 0.5rem;
+  color: var(--blueprint-line);
+  letter-spacing: 0.1em;
+}
+footer .accent-dot { color: var(--accent); }
+
+/* ═════════ TOAST ═════════ */
+.toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(120%);
+  background: var(--redacted-bg);
+  color: var(--bg-primary);
+  padding: 12px 22px;
+  border-radius: 6px;
+  font-family: var(--font-heading);
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.25);
+  transition: transform 0.45s cubic-bezier(0.4,0,0.2,1);
+  border: 1px solid var(--accent);
+}
+.toast.on { transform: translateX(-50%) translateY(0); }
+.toast .dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 10px var(--accent);
+}
+
+/* ═════════ TWEAKS PANEL ═════════ */
+#tweaks-panel {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 260px;
+  background: var(--bg-primary);
+  box-shadow: var(--neu-raised);
+  border-radius: 12px;
+  padding: 14px 16px;
+  z-index: 500;
+  transform: translateY(140%);
+  transition: transform .4s cubic-bezier(0.4,0,0.2,1);
+  font-family: var(--font-heading);
+}
+#tweaks-panel.on { transform: translateY(0); }
+#tweaks-panel h4 {
+  font-size: 0.7rem;
+  letter-spacing: 0.25em;
+  color: var(--text-primary);
+  padding-bottom: 8px;
+  border-bottom: 1px dashed var(--blueprint-faint);
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+#tweaks-panel h4 .chip {
+  font-size: 0.5rem;
+  color: var(--accent);
+  letter-spacing: 0.15em;
+}
+.tweak-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 0;
+  font-size: 0.62rem;
+  letter-spacing: 0.15em;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+}
+.tweak-row .tweak-opts {
+  display: flex;
+  gap: 4px;
+}
+.tweak-opt {
+  background: var(--bg-primary);
+  box-shadow: var(--neu-flat);
+  border: none;
+  padding: 4px 7px;
+  font-family: var(--font-heading);
+  font-size: 0.55rem;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  border-radius: 3px;
+  cursor: pointer;
+  transition: color .2s;
+}
+.tweak-opt:hover { color: var(--text-primary); }
+.tweak-opt.active {
+  box-shadow: var(--neu-inset-sm);
+  color: var(--accent);
+}
+
+/* ═════════ RESPONSIVE ═════════ */
+@media (max-width: 1150px) {
+  .product-wrap { grid-template-columns: 70px 1fr 380px; gap: 1.4rem; }
+  .dossier { grid-template-columns: 1fr; }
+  .related-grid { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 860px) {
+  .product-wrap { grid-template-columns: 1fr; }
+  .thumb-rail { flex-direction: row; overflow-x: auto; }
+  .breadcrumb-meta { display: none; }
+  .related-grid { grid-template-columns: repeat(2, 1fr); }
+  .product-title { font-size: 1.8rem; }
+}
+</style>
+</head>
+<body>
+
+<header id="site-header">
+  <div class="header-inner">
+    <a href="#" class="logo">SHADOW THREADS</a>
+    <nav id="main-nav">
+      <a href="#" class="nav-link active">ARCHIVE</a>
+      <a href="#" class="nav-link">THE LAB</a>
+      <a href="#" class="nav-link">TERMINAL</a>
+      <button class="nav-icon" aria-label="Search">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      </button>
+      <button class="nav-icon" aria-label="Cart" id="nav-cart">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+        <span class="nav-cart-count" id="cart-count">0</span>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<div id="root"></div>
+
+<script type="text/babel">
+const { useState, useEffect, useRef } = React;
+
+/* ─────────── TWEAKS DEFAULTS ─────────── */
+const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+  "layout": "classic",
+  "imageTreatment": "clean",
+  "ctaStyle": "neu",
+  "accent": "#e85d26"
+}/*EDITMODE-END*/;
+
+/* ─────────── DATA ─────────── */
+const PRODUCT = {
+  id: 1,
+  name: 'UFO SCHEMATIC TEE',
+  ref: '7F3A9',
+  encr: 'AES',
+  proto: 'OMEGA',
+  price: 45.00,
+  category: 'DECLASSIFIED VESSEL BLUEPRINTS',
+  classification: 'LEVEL 5',
+  dossierId: 'ST-UFO-047-Ω',
+  tagline: 'Declassified flying saucer schematic — reproduced from Archive Document 0x4F2A, recovered TS-2045.',
+  description: 'Technical cross-section print reproduced in micro-detail on 240 GSM midweight combed cotton. Six views of subject AV-19B, annotated in the original operator\'s hand. Discharge-printed for a fade-resistant blueprint line. Cut for daily field deployment.',
+  declassifiedOn: '03.04.2045',
+  firstSighting: '07.24.1947',
+  views: [
+    { id: 'front', label: 'FRONT', tag: 'V1', img: 'assets/tshirt-1.png' },
+    { id: 'macro', label: 'DETAIL',  tag: 'V2', img: 'assets/tshirt-1.png' },
+    { id: 'reverse', label: 'REVERSE', tag: 'V3', img: 'assets/tshirt-1.png' },
+    { id: 'folded', label: 'FOLDED',  tag: 'V4', img: 'assets/tshirt-1.png' },
+  ],
+  colors: [
+    { id: 'bone',   name: 'BONE',   hex: '#ecead8', code: '#01', stock: true },
+    { id: 'slate',  name: 'SLATE',  hex: '#2b2d3a', code: '#02', stock: true },
+    { id: 'rust',   name: 'RUST',   hex: '#9b3e1d', code: '#03', stock: true },
+    { id: 'fatigue', name: 'FATIGUE', hex: '#3e4231', code: '#04', stock: false },
+  ],
+  sizes: [
+    { id: 'xs', label: 'XS', available: true },
+    { id: 's',  label: 'S',  available: true },
+    { id: 'm',  label: 'M',  available: true },
+    { id: 'l',  label: 'L',  available: true },
+    { id: 'xl', label: 'XL', available: false },
+    { id: 'xxl', label: 'XXL', available: true },
+  ],
+};
+
+const RELATED = [
+  { id: 2, name: 'ALIEN BLUEPRINT TEE', price: 45, code: 'REF:3B1D7', img: 'assets/tshirt-2.png', temp: 38 },
+  { id: 3, name: 'RADAR SCAN TEE',      price: 45, code: 'REF:9C4E2', img: 'assets/tshirt-3.png', temp: 52 },
+  { id: 4, name: 'PROVIDENCE TEE',      price: 45, code: 'REF:0A8F6', img: 'assets/tshirt-4.png', temp: 41 },
+  { id: 5, name: 'CIRCUIT BOARD TEE',   price: 45, code: 'REF:5D2B1', img: 'assets/tshirt-5.png', temp: 49 },
+];
+
+/* ─────────── APP ─────────── */
+function App() {
+  const [viewId, setViewId] = useState('front');
+  const [colorId, setColorId] = useState('bone');
+  const [sizeId, setSizeId] = useState('m');
+  const [qty, setQty] = useState(1);
+  const [cart, setCart] = useState(0);
+  const [added, setAdded] = useState(false);
+  const [tab, setTab] = useState('dossier');
+  const [saved, setSaved] = useState(false);
+  const [zoomPos, setZoomPos] = useState(null);
+  const [locked, setLocked] = useState(false);
+  const [toast, setToast] = useState(null);
+  const [tweaks, setTweaks] = useState(TWEAK_DEFAULTS);
+  const [tweaksOn, setTweaksOn] = useState(false);
+
+  // edit mode wiring
+  useEffect(() => {
+    const onMsg = (e) => {
+      if (e.data?.type === '__activate_edit_mode') setTweaksOn(true);
+      if (e.data?.type === '__deactivate_edit_mode') setTweaksOn(false);
+    };
+    window.addEventListener('message', onMsg);
+    window.parent.postMessage({ type: '__edit_mode_available' }, '*');
+    return () => window.removeEventListener('message', onMsg);
+  }, []);
+
+  // mirror header cart badge
+  useEffect(() => {
+    const el = document.getElementById('cart-count');
+    if (el) el.textContent = cart;
+    el.style.background = cart > 0 ? 'var(--accent)' : 'var(--blueprint-line)';
+  }, [cart]);
+
+  const color = PRODUCT.colors.find(c => c.id === colorId);
+  const size = PRODUCT.sizes.find(s => s.id === sizeId);
+
+  const showToast = (msg) => {
+    setToast(msg);
+    setTimeout(() => setToast(null), 2400);
+  };
+
+  const addToCart = () => {
+    if (!size.available) return;
+    setCart(c => c + qty);
+    setAdded(true);
+    showToast(`+${qty} ${PRODUCT.name} · ${size.label} · ${color.name}`);
+    setTimeout(() => setAdded(false), 1600);
+  };
+
+  const handleImageMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    setZoomPos({ x, y, pct: { x: (x/rect.width*100).toFixed(1), y: (y/rect.height*100).toFixed(1) } });
+  };
+
+  const setTweak = (k, v) => {
+    const next = { ...tweaks, [k]: v };
+    setTweaks(next);
+    window.parent.postMessage({ type: '__edit_mode_set_keys', edits: { [k]: v } }, '*');
+  };
+
+  // apply accent tweak
+  useEffect(() => {
+    document.documentElement.style.setProperty('--accent', tweaks.accent);
+    const glow = hexToGlow(tweaks.accent);
+    document.documentElement.style.setProperty('--accent-glow', glow);
+    document.documentElement.style.setProperty('--accent-soft', hexToSoft(tweaks.accent));
+    document.documentElement.style.setProperty('--glow-orange', `0 0 18px ${glow}, 0 0 40px ${hexToSoft(tweaks.accent)}`);
+  }, [tweaks.accent]);
+
+  const activeImg = PRODUCT.views.find(v => v.id === viewId).img;
+
+  return (
+    <>
+      <div className="breadcrumb-bar">
+        <a href="#">ARCHIVE</a>
+        <span className="breadcrumb-sep">/</span>
+        <a href="#">{PRODUCT.category}</a>
+        <span className="breadcrumb-sep">/</span>
+        <span className="current">{PRODUCT.name}</span>
+        <div className="breadcrumb-meta">
+          <span><span className="accent-dot">●</span> DOSSIER {PRODUCT.dossierId}</span>
+          <span>ENCR: {PRODUCT.encr}-4096</span>
+          <span>PROTO: {PRODUCT.proto}</span>
+        </div>
+      </div>
+
+      <main>
+        <section className="product-wrap" data-layout={tweaks.layout}>
+          {/* THUMBS */}
+          <aside className="thumb-rail">
+            <div className="thumb-rail-label">VIEWS</div>
+            {PRODUCT.views.map(v => (
+              <div key={v.id}
+                   className={'thumb' + (v.id === viewId ? ' active' : '')}
+                   onClick={() => setViewId(v.id)}>
+                <img src={v.img} alt={v.label} style={{
+                  filter: v.id === 'macro' ? 'contrast(1.4) saturate(0.6)' : v.id === 'reverse' ? 'hue-rotate(180deg) brightness(0.9)' : v.id === 'folded' ? 'saturate(0.4) brightness(0.95)' : 'none'
+                }} />
+                <span className="thumb-view-tag">{v.tag}</span>
+              </div>
+            ))}
+            <div style={{flex: 1}} />
+            <div className="thumb-rail-label" style={{borderBottom:'none', borderTop:'1px solid var(--blueprint-faint)', paddingTop:6, marginTop:4}}>CLEARANCE</div>
+            <div style={{textAlign:'center', fontFamily:'var(--font-heading)', fontSize:'0.62rem', letterSpacing:'0.18em', color:'var(--accent)'}}>
+              LVL 5
+            </div>
+          </aside>
+
+          {/* IMAGE PANEL */}
+          <div className={'image-panel' + (zoomPos ? ' zoomed' : '')}
+               onMouseMove={handleImageMove}
+               onMouseLeave={() => setZoomPos(null)}>
+            <div className="corner-mark tl" />
+            <div className="corner-mark tr" />
+            <div className="corner-mark bl" />
+            <div className="corner-mark br" />
+
+            <div className="image-top-info">
+              <span><span className="accent-dot">●</span> RECORDING</span>
+              <span>CAM_{viewId.toUpperCase()}</span>
+              <span>F/2.8 · 1/250</span>
+              <span>47.123°N · 122.456°W</span>
+            </div>
+
+            <div className="image-canvas">
+              <img src={activeImg}
+                   alt={PRODUCT.name}
+                   style={{
+                     transformOrigin: zoomPos ? `${zoomPos.pct.x}% ${zoomPos.pct.y}%` : 'center',
+                     filter: tweaks.imageTreatment === 'blueprint'
+                       ? 'invert(1) hue-rotate(180deg) contrast(1.1) brightness(0.9) sepia(0.3) hue-rotate(170deg)'
+                       : tweaks.imageTreatment === 'duotone'
+                         ? 'grayscale(1) contrast(1.15) brightness(0.98)'
+                         : 'none',
+                     mixBlendMode: tweaks.imageTreatment === 'duotone' ? 'multiply' : 'normal',
+                   }} />
+            </div>
+
+            <div className="image-scan" />
+
+            {zoomPos && (
+              <div className="crosshair" style={{opacity: 1}}>
+                <div className="ch-v" style={{ left: zoomPos.x }} />
+                <div className="ch-h" style={{ top: zoomPos.y }} />
+                <div className="ch-coord" style={{ left: zoomPos.x, top: zoomPos.y }}>
+                  X {zoomPos.pct.x} · Y {zoomPos.pct.y}
+                </div>
+              </div>
+            )}
+
+            <button className="zoom-hint" onClick={() => setLocked(!locked)}>
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="8" y1="11" x2="14" y2="11"/><line x1="11" y1="8" x2="11" y2="14"/></svg>
+              HOVER TO INSPECT
+            </button>
+
+            <div className="image-bottom-info">
+              <span>SUBJECT: AV-19B</span>
+              <span>SCALE: 1:1</span>
+              <span>REV.{PRODUCT.views.findIndex(v => v.id === viewId) + 1}</span>
+            </div>
+
+            <div className={'clearance-lock' + (locked ? ' on' : '')}>
+              <div className="lock-bar">RESTRICTED</div>
+              <p>Further inspection requires Clearance Level 5 credentials. Continue to acknowledge archive protocol.</p>
+              <button className="lock-toggle" onClick={() => setLocked(false)}>DISMISS</button>
+            </div>
+          </div>
+
+          {/* INFO */}
+          <div className="info-panel">
+            <div className="dossier-tag">
+              <span className="accent-dot">●</span>
+              <span>DOSSIER {PRODUCT.dossierId}</span>
+              <span className="tag-ref">CLEARANCE: {PRODUCT.classification}</span>
+            </div>
+
+            <h1 className="product-title">{PRODUCT.name}</h1>
+            <p className="product-subtitle">{PRODUCT.tagline}</p>
+
+            <div className="price-block">
+              <span className="price">${PRODUCT.price.toFixed(2)}</span>
+              <span className="price-sub">USD · FREE CARRIER · DROP-SHIP 48H</span>
+              <span className="stock">
+                <span className="dot" />
+                IN SUPPLY
+              </span>
+            </div>
+
+            {/* COLOR */}
+            <div className="selector-group">
+              <div className="selector-head">
+                <span>COLORWAY · <span className="selected-val">{color.name} {color.code}</span></span>
+                <span style={{fontSize:'0.55rem', color:'var(--blueprint-line)'}}>{PRODUCT.colors.filter(c => c.stock).length}/{PRODUCT.colors.length} AVAIL</span>
+              </div>
+              <div className="color-row">
+                {PRODUCT.colors.map(c => (
+                  <button key={c.id}
+                          className={'color-chip' + (c.id === colorId ? ' active' : '') + (!c.stock ? ' sold-out' : '')}
+                          onClick={() => c.stock && setColorId(c.id)}
+                          title={`${c.name} ${c.code}${!c.stock ? ' · Sold out' : ''}`}>
+                    <span className="swatch" style={{background: c.hex}} />
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* SIZE */}
+            <div className="selector-group">
+              <div className="selector-head">
+                <span>SIZE · <span className="selected-val">{size.label}</span></span>
+                <a href="#" onClick={(e) => {e.preventDefault(); setTab('size'); document.querySelector('.dossier').scrollIntoView({behavior:'smooth', block:'start'});}}>SIZE CHART →</a>
+              </div>
+              <div className="size-grid">
+                {PRODUCT.sizes.map(s => (
+                  <button key={s.id}
+                          className={'size-cell' + (s.id === sizeId ? ' active' : '') + (!s.available ? ' oos' : '')}
+                          onClick={() => s.available && setSizeId(s.id)}
+                          disabled={!s.available}>
+                    {s.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* CTA */}
+            <div className="cta-row">
+              <div className="qty-box">
+                <button className="qty-btn" onClick={() => setQty(Math.max(1, qty - 1))}>−</button>
+                <span className="qty-val">{qty.toString().padStart(2, '0')}</span>
+                <button className="qty-btn" onClick={() => setQty(Math.min(9, qty + 1))}>+</button>
+              </div>
+              <button className={'add-cart-btn' + (added ? ' added' : '')} onClick={addToCart}>
+                <span>
+                  {added ? 'FILED · DISPATCHING' : 'FILE REQUISITION'}
+                  <span className="ship-sub">DISCREET CARRIER · TRACKED · SIGNATURE REQUIRED</span>
+                </span>
+              </button>
+            </div>
+
+            {/* ACCESSORY */}
+            <div className="accessory-row">
+              <button className={'accessory-btn' + (saved ? ' active' : '')} onClick={() => { setSaved(!saved); showToast(saved ? 'REMOVED FROM WATCHLIST' : 'ADDED TO WATCHLIST'); }}>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill={saved ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+                {saved ? 'WATCHED' : 'ADD TO WATCHLIST'}
+              </button>
+              <button className="accessory-btn" onClick={() => showToast('SECURE LINK COPIED')}>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                SECURE LINK
+              </button>
+              <button className="accessory-btn" onClick={() => showToast('OPENING LIVE AR PREVIEW')}>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                AR PREVIEW
+              </button>
+            </div>
+
+            {/* QUICK FACT STRIP */}
+            <div style={{display:'grid', gridTemplateColumns:'1fr 1fr', gap:'8px', marginTop:'4px'}}>
+              <FactCell label="DECLASSIFIED" value={PRODUCT.declassifiedOn} />
+              <FactCell label="FIRST CONTACT" value={PRODUCT.firstSighting} />
+              <FactCell label="GSM" value="240" />
+              <FactCell label="ORIGIN" value="PORTUGAL" />
+            </div>
+          </div>
+        </section>
+
+        {/* DOSSIER */}
+        <section className="dossier">
+          <div className="dossier-left">
+            <div className="dossier-heading">DOSSIER · FILE 0x4F2A</div>
+            <div className="tabs-row">
+              {['dossier','fabric','size','shipping'].map(t => (
+                <button key={t}
+                        className={'tab' + (tab === t ? ' active' : '')}
+                        onClick={() => setTab(t)}>
+                  {t === 'dossier' ? 'ACCOUNT' : t === 'fabric' ? 'MATERIALS' : t === 'size' ? 'FIT GUIDE' : 'DISPATCH'}
+                </button>
+              ))}
+            </div>
+            <div className="tab-body">
+              {tab === 'dossier' && (
+                <>
+                  <span className="ts">◦ ENTRY LOGGED {PRODUCT.declassifiedOn} · SOURCE TS-2045</span>
+                  <p>{PRODUCT.description}</p>
+                  <p>Subject AV-19B was photographed at low altitude above the testing flats at 03:41 local time, 07.24.1947. The original schematic — rendered in pencil by the duty operator within hours of contact — is preserved in the archive under seal. This print is a faithful 1:1 reproduction with annotations intact.</p>
+                </>
+              )}
+              {tab === 'fabric' && (
+                <ul>
+                  <li><span className="k">COMPOSITION</span><span className="v">100% long-staple combed cotton</span></li>
+                  <li><span className="k">WEIGHT</span><span className="v">240 GSM · midweight</span></li>
+                  <li><span className="k">CONSTRUCTION</span><span className="v">Tubular body · taped shoulders · ribbed collar</span></li>
+                  <li><span className="k">PRINT</span><span className="v">Discharge-dyed blueprint line · fade resistant</span></li>
+                  <li><span className="k">MILL</span><span className="v">Porto, Portugal · OEKO-TEX 100 certified</span></li>
+                  <li><span className="k">CARE</span><span className="v">Cold wash, tumble low, iron reverse</span></li>
+                </ul>
+              )}
+              {tab === 'size' && (
+                <>
+                  <p style={{marginBottom:'0.7rem'}}>Drop-shoulder box cut. For the relaxed silhouette pictured, order your true size. For a closer fit, size down one.</p>
+                  <table className="measure-table">
+                    <thead>
+                      <tr><th>SIZE</th><th>CHEST</th><th>LENGTH</th><th>SHOULDER</th><th>SLEEVE</th></tr>
+                    </thead>
+                    <tbody>
+                      {[
+                        {s:'XS', c:'48', l:'67', sh:'44', sl:'20'},
+                        {s:'S',  c:'51', l:'69', sh:'46', sl:'21'},
+                        {s:'M',  c:'54', l:'71', sh:'48', sl:'22'},
+                        {s:'L',  c:'57', l:'73', sh:'50', sl:'23'},
+                        {s:'XL', c:'60', l:'75', sh:'52', sl:'24'},
+                        {s:'XXL',c:'63', l:'77', sh:'54', sl:'25'},
+                      ].map(r => (
+                        <tr key={r.s} className={r.s.toLowerCase() === size.label.toLowerCase() ? 'selected' : ''}>
+                          <td>{r.s}</td><td>{r.c}</td><td>{r.l}</td><td>{r.sh}</td><td>{r.sl}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                  <p style={{fontSize:'0.6rem', color:'var(--text-muted)', marginTop:'8px'}}>All measurements in centimeters · tolerance ± 1 cm</p>
+                </>
+              )}
+              {tab === 'shipping' && (
+                <ul>
+                  <li><span className="k">CARRIER</span><span className="v">Encrypted courier · no return address</span></li>
+                  <li><span className="k">TRANSIT</span><span className="v">Domestic 48h · Global 5–7 days</span></li>
+                  <li><span className="k">PACKAGING</span><span className="v">Unmarked kraft sleeve · tamper-evident seal</span></li>
+                  <li><span className="k">TRACKING</span><span className="v">One-time code · expires on delivery</span></li>
+                  <li><span className="k">RETURNS</span><span className="v">30 days · archive-sealed · unworn</span></li>
+                </ul>
+              )}
+            </div>
+          </div>
+
+          <div className="spec-sheet">
+            <div className="spec-header">
+              <span>SCHEMATIC</span>
+              <span className="id">AV-19B / REV.{PRODUCT.views.findIndex(v => v.id === viewId) + 1}</span>
+            </div>
+            <div className="spec-body">
+              <SpecRow k="SUBJECT" v="Disc-form vessel, AV-19B" />
+              <SpecRow k="DIAMETER" v="11.2 m ± 0.3" />
+              <SpecRow k="HULL" v="Unidentified alloy" />
+              <SpecRow k="PROPULSION" v="Non-reactive gradient" />
+              <SpecRow k="CREW" v="≤ 3, humanoid" />
+              <SpecRow k="ACOUSTIC" v="24–31 dBA @ 50 m" />
+              <SpecRow k="RECOVERY" v="Sector 4 · Flats" />
+              <SpecRow k="STATUS" v="Archived · sealed" />
+            </div>
+
+            {/* mini schematic illustration */}
+            <div style={{marginTop:'18px', position:'relative', height:'96px', display:'flex', alignItems:'center', justifyContent:'center'}}>
+              <svg viewBox="0 0 260 90" style={{width:'100%', height:'100%'}}>
+                {/* dashed guides */}
+                <line x1="10" y1="50" x2="250" y2="50" stroke="var(--blueprint-line)" strokeWidth="0.6" strokeDasharray="3 3" opacity="0.5"/>
+                <line x1="130" y1="8" x2="130" y2="82" stroke="var(--blueprint-line)" strokeWidth="0.6" strokeDasharray="3 3" opacity="0.5"/>
+                {/* saucer profile */}
+                <path d="M 40 50 Q 60 42, 90 40 Q 130 28, 170 40 Q 200 42, 220 50 Q 200 58, 170 60 Q 130 64, 90 60 Q 60 58, 40 50 Z" fill="none" stroke="var(--blueprint-line)" strokeWidth="1"/>
+                {/* dome */}
+                <path d="M 100 40 Q 110 28, 130 25 Q 150 28, 160 40" fill="none" stroke="var(--blueprint-line)" strokeWidth="1"/>
+                {/* windows */}
+                <circle cx="115" cy="50" r="2" fill="var(--accent)"/>
+                <circle cx="130" cy="50" r="2" fill="var(--accent)"/>
+                <circle cx="145" cy="50" r="2" fill="var(--accent)"/>
+                {/* dimension */}
+                <line x1="40" y1="78" x2="220" y2="78" stroke="var(--blueprint-line)" strokeWidth="0.5"/>
+                <line x1="40" y1="74" x2="40" y2="82" stroke="var(--blueprint-line)" strokeWidth="0.5"/>
+                <line x1="220" y1="74" x2="220" y2="82" stroke="var(--blueprint-line)" strokeWidth="0.5"/>
+                <text x="130" y="89" fontSize="6" fill="var(--text-muted)" textAnchor="middle" fontFamily="monospace" letterSpacing="0.5">11.2 m</text>
+                {/* leader */}
+                <line x1="160" y1="40" x2="195" y2="18" stroke="var(--blueprint-line)" strokeWidth="0.4"/>
+                <text x="198" y="16" fontSize="5" fill="var(--text-muted)" fontFamily="monospace">DORSAL VENT</text>
+                <line x1="115" y1="50" x2="70" y2="18" stroke="var(--blueprint-line)" strokeWidth="0.4"/>
+                <text x="15" y="16" fontSize="5" fill="var(--text-muted)" fontFamily="monospace">VIEWPORT ×3</text>
+              </svg>
+            </div>
+          </div>
+        </section>
+
+        {/* RELATED */}
+        <section className="related">
+          <div className="related-head">
+            <span className="tag">ADJACENT FILES</span>
+            <div className="line" />
+            <span className="meta">{RELATED.length} RECORDS · SIGNAL STRENGTH GOOD</span>
+          </div>
+          <div className="related-grid">
+            {RELATED.map(r => (
+              <div className="rel-card" key={r.id}>
+                <div className="rel-top">
+                  <span>{r.code}</span>
+                  <span className="dot" />
+                </div>
+                <div className="rel-img">
+                  <img src={r.img} alt={r.name} />
+                </div>
+                <div style={{padding:'6px 14px 0', display:'flex', justifyContent:'space-between', fontFamily:'var(--font-mono)', fontSize:'0.5rem', color:'var(--text-muted)', letterSpacing:'0.1em'}}>
+                  <span>● ACTIVE</span>
+                  <span style={{color:'var(--accent)'}}>{r.temp}°</span>
+                </div>
+                <div className="rel-info">
+                  <span className="name">{r.name}</span>
+                  <span className="price">${r.price.toFixed(2)}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+      </main>
+
+      <footer>
+        <p className="footer-text">© 2045 SHADOW THREADS — ALL FILES REMAIN CLASSIFIED — CLEARANCE LEVEL 5 REQUIRED</p>
+        <p className="footer-sub">DOCUMENT REF: ST-2045-OMEGA · ENCRYPTION: AES-4096 · STATUS: <span className="accent-dot">●</span> ACTIVE</p>
+      </footer>
+
+      {/* TOAST */}
+      <div className={'toast' + (toast ? ' on' : '')}>
+        <span className="dot" />
+        {toast}
+      </div>
+
+      {/* TWEAKS */}
+      <div id="tweaks-panel" className={tweaksOn ? 'on' : ''}>
+        <h4>TWEAKS <span className="chip">● LIVE</span></h4>
+        <TweakRow label="LAYOUT" value={tweaks.layout} options={['classic','stacked']} onChange={v => setTweak('layout', v)} />
+        <TweakRow label="IMAGE FX" value={tweaks.imageTreatment} options={['clean','duotone','blueprint']} onChange={v => setTweak('imageTreatment', v)} />
+        <TweakRow label="ACCENT"
+          value={tweaks.accent}
+          options={[
+            {label:'RUST', v:'#e85d26'},
+            {label:'CYAN', v:'#1f9aa8'},
+            {label:'LIME', v:'#9bb025'},
+            {label:'VIOLET', v:'#8b5dd4'},
+          ]}
+          onChange={v => setTweak('accent', v)} />
+      </div>
+    </>
+  );
+}
+
+function FactCell({label, value}) {
+  return (
+    <div style={{padding:'10px 12px', background:'var(--bg-primary)', boxShadow:'var(--neu-flat)', borderRadius:'6px'}}>
+      <div style={{fontFamily:'var(--font-heading)', fontSize:'0.55rem', letterSpacing:'0.2em', color:'var(--text-muted)'}}>{label}</div>
+      <div style={{fontFamily:'var(--font-mono)', fontSize:'0.82rem', color:'var(--text-primary)', marginTop:'2px'}}>{value}</div>
+    </div>
+  );
+}
+
+function SpecRow({k, v}) {
+  return (
+    <div className="spec-row">
+      <span className="k">{k}</span>
+      <span className="v">{v}</span>
+    </div>
+  );
+}
+
+function TweakRow({label, value, options, onChange}) {
+  const normalized = options.map(o => typeof o === 'string' ? {label:o, v:o} : o);
+  return (
+    <div className="tweak-row">
+      <span>{label}</span>
+      <div className="tweak-opts">
+        {normalized.map(o => (
+          <button key={o.v}
+                  className={'tweak-opt' + (value === o.v ? ' active' : '')}
+                  onClick={() => onChange(o.v)}
+                  style={label === 'ACCENT' ? {background: o.v, color: '#fff', boxShadow: value === o.v ? 'inset 2px 2px 5px rgba(0,0,0,0.3)' : '2px 2px 6px rgba(0,0,0,0.15)'} : {}}>
+            {o.label}
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* helpers */
+function hexToGlow(hex) {
+  const {r,g,b} = parseHex(hex);
+  return `rgba(${r}, ${g}, ${b}, 0.45)`;
+}
+function hexToSoft(hex) {
+  const {r,g,b} = parseHex(hex);
+  return `rgba(${r}, ${g}, ${b}, 0.12)`;
+}
+function parseHex(hex) {
+  const h = hex.replace('#','');
+  return { r: parseInt(h.slice(0,2),16), g: parseInt(h.slice(2,4),16), b: parseInt(h.slice(4,6),16) };
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+
+</body>
+</html>

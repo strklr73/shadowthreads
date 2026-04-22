@@ -1,0 +1,18 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"><link rel="stylesheet" href="../colors_and_type.css"><style>
+body { padding: 28px 24px; background: var(--bg-primary); }
+.row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; align-items: end; }
+.tracker { text-align: center; }
+.tracker .bar { height: 32px; background: var(--bg-primary); box-shadow: var(--neu-inset-sm); border-radius: var(--r-sm); display: flex; align-items: center; justify-content: center; font-family: var(--font-heading); font-weight: 600; color: var(--fg-primary); font-size: 12px; }
+.tracker .lbl { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.1em; color: var(--fg-muted); margin-top: 6px; }
+.hdr { font-family: var(--font-heading); font-size: 11px; letter-spacing: 0.22em; color: var(--fg-muted); text-transform: uppercase; padding-bottom: 14px; display: flex; align-items: center; gap: 10px; }
+.hdr::before { content: ''; width: 22px; height: 1px; background: var(--accent); }
+</style></head><body>
+<div class="hdr">LETTER-SPACING DISCIPLINE</div>
+<div class="row">
+  <div class="tracker"><div class="bar" style="letter-spacing:0.04em">TIGHT</div><div class="lbl">0.04em · titles</div></div>
+  <div class="tracker"><div class="bar" style="letter-spacing:0.08em">NORMAL</div><div class="lbl">0.08em · h2</div></div>
+  <div class="tracker"><div class="bar" style="letter-spacing:0.12em">WIDE</div><div class="lbl">0.12em · nav/logo</div></div>
+  <div class="tracker"><div class="bar" style="letter-spacing:0.18em">XWIDE</div><div class="lbl">0.18em · tags</div></div>
+  <div class="tracker"><div class="bar" style="letter-spacing:0.25em">XXWIDE</div><div class="lbl">0.25em · chips</div></div>
+</div>
+</body></html>

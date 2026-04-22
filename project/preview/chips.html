@@ -1,0 +1,17 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"><link rel="stylesheet" href="../colors_and_type.css"><style>
+body { padding: 28px 24px; background: var(--bg-primary); display: flex; gap: 18px; align-items: center; flex-wrap: wrap; }
+.chip { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-heading); font-size: 10px; letter-spacing: 0.22em; color: var(--fg-muted); text-transform: uppercase; padding: 7px 12px; border-radius: 4px; background: var(--bg-primary); box-shadow: var(--neu-flat); }
+.chip .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 0 var(--accent-glow); animation: st-pulse-dot 2s infinite; }
+.redact { background: var(--bg-redacted); color: var(--fg-on-dark); font-family: var(--font-heading); font-weight: 700; font-size: 12px; letter-spacing: 0.25em; padding: 6px 18px; border-radius: 3px; }
+.clear { font-family: var(--font-heading); font-size: 10px; letter-spacing: 0.22em; color: var(--accent); padding: 6px 12px; border: 1px solid var(--accent); border-radius: 3px; background: transparent; }
+.hdr { font-family: var(--font-heading); font-size: 11px; letter-spacing: 0.22em; color: var(--fg-muted); text-transform: uppercase; width: 100%; padding-bottom: 6px; display: flex; align-items: center; gap: 10px; }
+.hdr::before { content: ''; width: 22px; height: 1px; background: var(--accent); }
+</style></head><body>
+<div class="hdr">CHIPS, REDACTION, CLEARANCE</div>
+<div class="chip"><span class="dot"></span> IN SUPPLY</div>
+<div class="chip">REF:7F3A9</div>
+<div class="chip">ENCR: AES-4096</div>
+<span class="redact">REDACTED</span>
+<span class="redact" style="background: var(--accent); color: #fff">RESTRICTED</span>
+<button class="clear">LVL 5 CLEARANCE</button>
+</body></html>

@@ -1,0 +1,20 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"><link rel="stylesheet" href="../colors_and_type.css"><style>
+body { padding: 28px; background: var(--bg-primary); }
+.row { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+.demo { position: relative; height: 70px; background: var(--bg-secondary); box-shadow: var(--neu-inset); border-radius: 10px; overflow: hidden; }
+.scan { position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--accent-soft) 30%, var(--accent) 50%, var(--accent-soft) 70%, transparent); opacity: 0.6; animation: st-scan-sweep 3s linear infinite; }
+.dot { width: 10px; height: 10px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 0 var(--accent-glow); animation: st-pulse-dot 2s infinite; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); }
+.flicker { font-family: var(--font-heading); font-weight: 700; font-size: 14px; letter-spacing: 0.25em; color: var(--accent); position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); animation: st-flicker 2.5s infinite; }
+.ring { width: 50px; height: 50px; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); }
+.lbl { font-family: var(--font-heading); font-size: 9px; letter-spacing: 0.22em; color: var(--fg-muted); text-transform: uppercase; margin-top: 6px; text-align: center; }
+.hdr { font-family: var(--font-heading); font-size: 11px; letter-spacing: 0.22em; color: var(--fg-muted); text-transform: uppercase; padding-bottom: 14px; display: flex; align-items: center; gap: 10px; }
+.hdr::before { content: ''; width: 22px; height: 1px; background: var(--accent); }
+</style></head><body>
+<div class="hdr">MOTION LIBRARY</div>
+<div class="row">
+  <div><div class="demo"><div class="scan"></div></div><div class="lbl">SCAN SWEEP · 3–5s linear</div></div>
+  <div><div class="demo"><div class="dot"></div></div><div class="lbl">PULSE DOT · 2s</div></div>
+  <div><div class="demo"><div class="flicker">ACTIVE</div></div><div class="lbl">FLICKER · 2.5s</div></div>
+  <div><div class="demo"><svg class="ring" viewBox="0 0 60 60"><circle cx="30" cy="30" r="24" fill="none" stroke="#8a8a9a" stroke-width="0.8"/><path d="M 30 6 A 24 24 0 0 1 54 30" fill="none" stroke="#e85d26" stroke-width="1.4" stroke-dasharray="4 6" style="animation: st-arc-spin 5s linear infinite; transform-origin:30px 30px"/></svg></div><div class="lbl">ARC SPIN · 5–6s</div></div>
+</div>
+</body></html>
