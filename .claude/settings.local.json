@@ -5,7 +5,10 @@
       "Bash(npm install *)",
       "Bash(npx vite *)",
       "mcp__Claude_Preview__preview_start",
-      "Bash(gh auth *)"
+      "Bash(gh auth *)",
+      "Bash(mkdir -p /tmp/design)",
+      "Bash(tar -xzf /Users/travishyatt/.claude/projects/-Users-travishyatt-Documents-AG-Workspaces-Shadow-Threads-2--claude-worktrees-nostalgic-mestorf-f22139/dbf89adf-a746-4ebd-905e-0e1a52e67fce/tool-results/webfetch-1776998423102-kgz9lj.bin -C /tmp/design)",
+      "Read(//tmp/**)"
     ]
   }
 }
