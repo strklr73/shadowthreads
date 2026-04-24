@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import Header from './Header.jsx';
 import { FEATURED, CATALOG } from '../data.js';
 
-export default function Home({ cartCount, onOpenProduct }) {
+export default function Home({ cartCount, onOpenProduct, onShadowCasters }) {
   const [slide, setSlide] = useState(0);
   const [zoomPos, setZoomPos] = useState(null);
   const [paused, setPaused] = useState(false);
@@ -38,7 +38,7 @@ export default function Home({ cartCount, onOpenProduct }) {
 
   return (
     <>
-      <Header cartCount={cartCount} />
+      <Header cartCount={cartCount} active="archive" onShadowCasters={onShadowCasters} />
 
       <div className="breadcrumb-bar">
         <a href="#">ARCHIVE</a>
